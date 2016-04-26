@@ -15,14 +15,14 @@
 
 	<p>
 		<label for='category'>Category:</label>
-		<selected id='category' ng-model='adData.categoryId'>
+		<select id='category' ng-model='adData.categoryId'>
 			<option value='null'>(None)</option>
 			<option ng-repeat='category in categories' value='{{category.id}}'>{{category.name}}</option>
 		</select>
 	</p>
 	<p>
 		<label for='town'>Town:</label>
-		<selected id='town' ng-model='adData.townId'>
+		<select id='town' ng-model='adData.townId'>
 			<option value='null'>(None)</option>
 			<option ng-repeat='town in towns' value='{{town.id}}'>{{town.name}}</option>
 		</select>

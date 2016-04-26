@@ -9,14 +9,11 @@ app.factory('authService', function($http, baseServiceUrl){
 				url: baseServiceUrl + '/api/user/login',
 				data: userData
 			};
-			$http(request)
-			.success(function(data){
-				sessionStorage['currentUser'] == JSON.stringify(data);
+			$http(request).success(function(data){
+				sessionStorage['currentUser'] = JSON.stringify(data);
+				console.log(JSON.stringify(data));
 				success(data);
-			})
-			.error(function(error){
-				console.log(error);
-			});
+			}).error(error);
 		},
 		register: function(userData, success, error){
 			var request = {
@@ -26,7 +23,7 @@ app.factory('authService', function($http, baseServiceUrl){
 			};
 			$http(request)
 			.success(function(data){
-				sessionStorage['currentUser'] == JSON.stringify(data);
+				sessionStorage['currentUser'] = JSON.stringify(data);
 				success(data);
 			})
 			.error(error);
@@ -44,7 +41,7 @@ app.factory('authService', function($http, baseServiceUrl){
 			return sessionStorage['currentUser'] == undefined;
 		},
 		isLoggedIn: function(){
-			return !!sessionStorage['currentUser'];
+			return sessionStorage['currentUser'] != undefined; //!!sessionStorage['currentUser'];
 		},
 		isNormalUser: function(){
 			var currentUser = this.getCurrentUser();
@@ -52,7 +49,7 @@ app.factory('authService', function($http, baseServiceUrl){
 		},
 		isAdmin: function(){
 			var currentUser = this.getCurrentUser();
-			return (currentUser != undefined) && (!currentUser.isNormalUser);
+			return (currentUser != undefined) && (currentUser.isAdmin);
 		},
 		getAuthHeaders: function(){
 			var headers = {};
