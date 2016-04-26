@@ -21,5 +21,17 @@ app.config(function($routeProvider){
 		controller: 'RegisterController'
 	});
 
+	$routeProvider.when('/user/ads/publish', {
+		templateUrl: 'templates/user/publish-new-ad.html',
+		controller: 'UserPublishNewAdController' 
+	});
 
 });
+
+app.run(function($rootScope, $location, authService){
+	$rootScope.$on('$locationChangeStart', function(event){
+		if($location.path().indexOf('/user/') != -1 && !authService.isLoggedIn()){
+			$location.path('/');
+		}
+	})
+})

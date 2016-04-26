@@ -4,7 +4,7 @@ app.controller('HomeController', function ($scope, $rootScope, adsService, notif
 	$rootScope.state = 'Home';
 
 	$scope.adsParams = {
-		'startPate' : 1,
+		'startPage' : 1,
 		'pageSize' : pageSize
 	};
 	$scope.reloadAds = function(){
@@ -14,9 +14,19 @@ app.controller('HomeController', function ($scope, $rootScope, adsService, notif
 				$scope.ads = data;
 			},
 			function error(err){
-				notifyService.showError('cannot load ', err);
+				notifyService.showError('cannot load ads ', err);
 			}
 		);
 	};
-	$scope.reloadAds(); 
+	$scope.reloadAds();
+	$scope.$on('categorySelectionChanged', function(event, selectedCategoryId){
+		$scope.adsParams.categoryId = selectedCategoryId;
+		$scope.adsParams.startPage = 1;
+		$scope.reloadAds();
+	});
+	$scope.$on('townSelectionChanged', function(event, selectedTownId){
+		$scope.adsParams.townId = selectedTownId;
+		$scope.adsParams.startPage = 1;
+		$scope.reloadAds();
+	}); 
 });
